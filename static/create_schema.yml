@@ -1,0 +1,15 @@
+---
+name: github_schema
+service_type: secret.credentials
+schema:
+  properties:
+    github_access_token:
+      title: Github Access Token
+      type: string
+  required:
+    - github_access_token
+  type: object
+labels:
+  - Github
+tags:
+  description: Github Credentials

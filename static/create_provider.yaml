@@ -1,0 +1,34 @@
+---
+provider: github
+name: github
+tags:
+  icon: https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png
+  label: Github
+template:
+  service_account:
+    schema:
+      properties:
+        account_id:
+          title: Account Id
+          type: string
+      required:
+        - account_id
+      type: object
+capability:
+  supported_schema:
+    - github_schema
+metadata:
+  view:
+    layouts:
+      help:service_account:create:
+        name: Creation Help
+        options:
+          markdown:
+            en: "# Getting Started with Github
+
+              Easily manage and track your repositories through Github.
+              "
+            ko: "# Github 시작 가이드
+
+                  Github를 통해 손쉽게 Repository를 관리하고 추적할 수 있습니다.
+              "

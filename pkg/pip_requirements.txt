@@ -1,0 +1,4 @@
+spaceone-api
+pre-commit
+PyGithub
+grpcio

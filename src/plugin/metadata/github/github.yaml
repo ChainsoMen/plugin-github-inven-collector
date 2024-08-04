@@ -1,0 +1,38 @@
+search:
+  fields:
+    - 이름: data.name
+    - 풀네임: data.full_name
+    - 비공개 여부: data.private
+    - 생성 날짜: data.created_at
+table:
+  sort:
+    key: data.created_at
+    desc: true
+  fields:
+    - 이름: data.name
+    - 풀네임: data.full_name
+    - 비공개 여부: data.private
+    - 설명: data.description
+    - URL: data.html_url
+    - 생성 날짜: data.created_at
+    - 업데이트 날짜: data.updated_at
+    - 푸시 날짜: data.pushed_at
+    - 브런치 이름 : data.branches
+tabs.0:
+  name: Details
+  type: item
+  fields:
+    - 이름: data.name
+    - 풀네임: data.full_name
+    - 비공개 여부: data.private
+    - 설명: data.description
+    - URL: data.html_url
+    - 생성 날짜: data.created_at
+    - 업데이트 날짜: data.updated_at
+    - 푸시 날짜: data.pushed_at
+tabs.1:
+  name: Branches
+  type: item
+  fields:
+    - 브런치 이름: data.branches
+    

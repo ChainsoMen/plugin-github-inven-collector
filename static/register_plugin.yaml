@@ -1,0 +1,17 @@
+---
+name: Github Collector
+provider: github
+service_type: inventory.Collector
+registry_config: { }
+registry_type: DOCKER_HUB
+image: chanjin/plugin-github-inven-collector
+capability:
+  supported_schema:
+    - github_schema
+tags:
+  description: github collector
+  icon: https://cdns.iconmonstr.com/wp-content/releases/preview/2012/240/iconmonstr-github-1.png
+  long_description: Collects data from github
+labels:
+  - Github
+template: { }

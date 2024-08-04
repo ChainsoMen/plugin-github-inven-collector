@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plugin-github-inven-collector
+  namespace: cloudforet-plugin
+  labels:
+    domain_id: domain-006cb37621f7
+    plugin_id: plugin-github-inven-collector
+    service_type: inventory.Collector
+    supervisor_name: root
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      domain_id: domain-006cb37621f7
+      plugin_id: plugin-github-inven-collector
+      service_type: inventory.Collector
+      supervisor_name: root
+  template:
+    metadata:
+      labels:
+        domain_id: domain-006cb37621f7
+        plugin_id: plugin-github-inven-collector
+        service_type: inventory.Collector
+        supervisor_name: root
+    spec:
+      containers:
+      - name: github-collector
+        image: registry.hub.docker.com/chanjin/plugin-github-inven-collector
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 50051
+        livenessProbe:
+          tcpSocket:
+            port: 50051
+          initialDelaySeconds: 0
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
