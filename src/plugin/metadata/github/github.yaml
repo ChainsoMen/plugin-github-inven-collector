@@ -18,6 +18,14 @@ table:
     - 업데이트 날짜: data.updated_at
     - 푸시 날짜: data.pushed_at
     - 브런치 이름 : data.branches
+    - Actions : data.workflows
+    - workflow name : data.workflows.name
+    - workflow id : data.workflows.id
+    - workflow state : data.workflows.state
+    - workflow created_at : data.workflows.created_at
+    - workflow updated_at : data.workflows.updated_at
+    - workflow file : data.workflows.file
+    - workflow content : data.workflows.content
 tabs.0:
   name: Details
   type: item
@@ -35,4 +43,17 @@ tabs.1:
   type: item
   fields:
     - 브런치 이름: data.branches
+tabs.2:
+  name: Recent Workflow
+  type: item
+  fields:
+    - workflow name: data.workflows.name
+    - workflow id: data.workflows.id
+    - workflow state: data.workflows.state
+    - workflow created_at: data.workflows.created_at
+    - workflow updated_at: data.workflows.updated_at
+    - workflow file: data.workflows.file
+    - workflow content: data.workflows.content
+
+
     
