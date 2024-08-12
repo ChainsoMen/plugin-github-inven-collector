@@ -26,6 +26,7 @@ table:
     - workflow updated_at : data.workflows.updated_at
     - workflow file : data.workflows.file
     - workflow content : data.workflows.content
+    - pull request : data.pull_requests
 tabs.0:
   name: Details
   type: item
@@ -38,6 +39,7 @@ tabs.0:
     - 생성 날짜: data.created_at
     - 업데이트 날짜: data.updated_at
     - 푸시 날짜: data.pushed_at
+    - pull request 개수 : data.pull_requests
 tabs.1:
   name: Branches
   type: item

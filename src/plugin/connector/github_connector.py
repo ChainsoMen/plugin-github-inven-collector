@@ -11,33 +11,6 @@ class GithubConnector(BaseConnector):
         super().__init__(*args, **kwargs)
         self.client = Github(github_access_token)
 
-    # # 예시 코드 나중에 지워도 됨
-    # def list_cryptocurrencies(self) -> List[Dict]:
-    #     try:
-    #         coins = self.client.get_coins_markets(
-    #             vs_currency="krw", order="market_cap_desc", per_page=5, page=1
-    #         )
-
-    #         filtered_coins = list()
-    #         for coin in coins:
-    #             filtered_coins.append(
-    #                 {
-    #                     "name": coin["name"],
-    #                     "current_price": coin["current_price"],
-    #                     "market_cap_rank": coin["market_cap_rank"],
-    #                     "price_change_percentage_24h": coin[
-    #                         "price_change_percentage_24h"
-    #                     ],
-    #                     "high_24h": coin["high_24h"],
-    #                     "low_24h": coin["low_24h"],
-    #                     "last_updated": coin["last_updated"],
-    #                 }
-    #             )
-    #         return filtered_coins
-    #     except Exception as e:
-    #         _LOGGER.error(f"Error fetching cryptocurrency data: {e}")
-    #         return []
-
     def list_repositories(self) -> List[Dict]:
         try:
             repos = self.client.get_user().get_repos()
@@ -52,6 +25,7 @@ class GithubConnector(BaseConnector):
                     'created_at': repo.created_at.isoformat(),
                     'updated_at': repo.updated_at.isoformat(),
                     'pushed_at': repo.pushed_at.isoformat(),
+                    'pull_requests': repo.get_pulls().totalCount,
                     'branches': [branch.name for branch in repo.get_branches()],
                     'workflows': {'name': '', 'id': '', 'state': '', 'created_at': '', 'updated_at': '', 'file': '', 'content': ''}
                 }
