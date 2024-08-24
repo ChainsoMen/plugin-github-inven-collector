@@ -27,4 +27,27 @@ Please contact us if you need any further information. (<kr.public.wonjun@gmail.
 ## Collecting Contents
 
 * Table of Contents
-    
+
+## How to Use
+* Create Github Account
+<img width="1023" alt="image" src="https://github.com/user-attachments/assets/6fdfc599-d46b-4f69-80af-16a8863f3784">
+
+* Input Github Access Token
+<img width="1242" alt="image" src="https://github.com/user-attachments/assets/1bad5618-59ae-4427-bee8-58df4ca0da56">
+
+* Create Github Collector
+<img width="1026" alt="image" src="https://github.com/user-attachments/assets/4d797b9c-ad40-4324-9466-78a18459d774">
+
+* Selcect Github Collector
+<img width="1019" alt="image" src="https://github.com/user-attachments/assets/f01be1fd-35e1-4725-b0b8-4a3d2ff10c4a">
+
+* Collect Github Information
+<img width="1299" alt="image" src="https://github.com/user-attachments/assets/9e4d0eec-9a90-431f-853b-ff34cac1f07e">
+
+* Can See Github Repositories
+<img width="1213" alt="image" src="https://github.com/user-attachments/assets/3293ffaf-f559-4671-a36a-265125c3fd4c">
+
+* Can see Detail Informations
+<img width="1209" alt="image" src="https://github.com/user-attachments/assets/68217c0a-d28a-44d7-8f6d-81da47e6e9f5">
+
+
