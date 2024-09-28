@@ -1,6 +1,5 @@
 import logging
 from typing import Dict, List
-
 from github import Github
 from spaceone.core.connector import BaseConnector
 
@@ -27,33 +26,74 @@ class GithubConnector(BaseConnector):
                     'pushed_at': repo.pushed_at.isoformat(),
                     'pull_requests': repo.get_pulls().totalCount,
                     'branches': [branch.name for branch in repo.get_branches()],
-                    'workflows': {'name': '', 'id': '', 'state': '', 'created_at': '', 'updated_at': '', 'file': '', 'content': ''}
+                    'workflows': self.get_workflows(repo),
+                    'actions': self.get_actions(repo)
                 }
-                try:
-                    # 워크플로 정보 추가
-                    workflows = repo.get_workflows()
-                
-                    if workflows.totalCount > 0:
-                        # 가장 최신 워크플로 가져오기
-                        latest_workflow = workflows[0]
-                        
-                        repo_info['workflows'] = {
-                            'name': latest_workflow.name,
-                            'id': latest_workflow.id,
-                            'state': latest_workflow.state,
-                            'created_at': latest_workflow.created_at.isoformat(),
-                            'updated_at': latest_workflow.updated_at.isoformat(),
-                            'file': latest_workflow.path,
-                            'content': repo.get_contents(latest_workflow.path).decoded_content.decode('utf-8')
-                        }
-                        
-                except Exception as e:
-                    _LOGGER.error(f"Error fetching workflows from GitHub: {e}")
-                    
-                    
-
                 repo_list.append(repo_info)
             return repo_list
         except Exception as e:
             _LOGGER.error(f"Error fetching repositories from GitHub: {e}")
             return []
+
+    def get_workflows(self, repo):
+        try:
+            workflows = repo.get_workflows()
+            workflow_list = []
+            for wf in workflows:
+                workflow_list.append({
+                    'name': wf.name,
+                    'id': wf.id,
+                    'state': wf.state,
+                    'created_at': wf.created_at.isoformat(),
+                    'updated_at': wf.updated_at.isoformat(),
+                    'file': wf.path,
+                    'content': repo.get_contents(wf.path).decoded_content.decode('utf-8')
+                })
+            return workflow_list
+        except Exception as e:
+            _LOGGER.error(f"Error fetching workflows: {e}")
+            return []
+
+    def get_actions(self, repo):
+        try:
+            actions = []
+            workflows = repo.get_workflows()
+            for workflow in workflows:
+                runs = workflow.get_runs()
+                for run in runs:
+                    action_info = {
+                        'name': run.name,
+                        'status': run.status,
+                        'conclusion': run.conclusion,
+                        'created_at': run.created_at.isoformat(),
+                        'updated_at': run.updated_at.isoformat(),
+                        'url': run.html_url,
+                        'jobs': self.get_jobs(run)
+                    }
+                    actions.append(action_info)
+            return actions
+        except Exception as e:
+            _LOGGER.error(f"Error fetching actions: {e}")
+            return []
+
+    def get_jobs(self, run):
+        try:
+            # GitHub API 호출을 통해 Job 정보를 가져옵니다.
+            jobs_url = run.jobs_url
+            response = self.client._Github__requester.requestJsonAndCheck("GET", jobs_url)
+            jobs = response[1].get('jobs', [])
+            job_list = []
+            for job in jobs:
+                job_info = {
+                    'name': job['name'],
+                    'status': job['status'],
+                    'conclusion': job['conclusion'],
+                    'started_at': job['started_at'],
+                    'completed_at': job['completed_at'],
+                }
+                job_list.append(job_info)
+            return job_list
+        except Exception as e:
+            _LOGGER.error(f"Error fetching jobs: {e}")
+            return []
+
