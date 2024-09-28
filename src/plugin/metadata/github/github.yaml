@@ -17,16 +17,28 @@ table:
     - 생성 날짜: data.created_at
     - 업데이트 날짜: data.updated_at
     - 푸시 날짜: data.pushed_at
-    - 브런치 이름 : data.branches
-    - Actions : data.workflows
-    - workflow name : data.workflows.name
-    - workflow id : data.workflows.id
-    - workflow state : data.workflows.state
-    - workflow created_at : data.workflows.created_at
-    - workflow updated_at : data.workflows.updated_at
-    - workflow file : data.workflows.file
-    - workflow content : data.workflows.content
-    - pull request : data.pull_requests
+    - 브런치 이름: data.branches
+    - Actions: data.workflows
+    - workflow name: data.workflows.name
+    - workflow id: data.workflows.id
+    - workflow state: data.workflows.state
+    - workflow created_at: data.workflows.created_at
+    - workflow updated_at: data.workflows.updated_at
+    - workflow file: data.workflows.file
+    - workflow content: data.workflows.content
+    - pull request: data.pull_requests
+    - Action Name: data.actions.name
+    - Action Status: data.actions.status
+    - Action Conclusion: data.actions.conclusion
+    - Action Created At: data.actions.created_at
+    - Action Updated At: data.actions.updated_at
+    - Action URL: data.actions.url
+    - Job Name: data.actions.jobs.name
+    - Job Status: data.actions.jobs.status
+    - Job Conclusion: data.actions.jobs.conclusion
+    - Job Started At: data.actions.jobs.started_at
+    - Job Completed At: data.actions.jobs.completed_at
+
 tabs.0:
   name: Details
   type: item
@@ -39,12 +51,13 @@ tabs.0:
     - 생성 날짜: data.created_at
     - 업데이트 날짜: data.updated_at
     - 푸시 날짜: data.pushed_at
-    - pull request 개수 : data.pull_requests
+    - pull request 개수: data.pull_requests
 tabs.1:
   name: Branches
-  type: item
+  type: table
+  root_path: data.branches
   fields:
-    - 브런치 이름: data.branches
+    - 브런치 이름: .
 tabs.2:
   name: Recent Workflow
   type: item
@@ -56,6 +69,26 @@ tabs.2:
     - workflow updated_at: data.workflows.updated_at
     - workflow file: data.workflows.file
     - workflow content: data.workflows.content
-
-
     
+tabs.3:
+  name: Actions
+  type: table
+  root_path: data.actions
+  fields:
+    - Action Name: name
+    - Action Status: status
+    - Action Conclusion: conclusion
+    - Action Created At: created_at
+    - Action Updated At: updated_at
+    - Action URL: url
+
+tabs.4:
+  name: Jobs
+  type: table
+  root_path: data.actions.jobs
+  fields:
+    - Job Name: name
+    - Job Status: status
+    - Job Conclusion: conclusion
+    - Job Started At: started_at
+    - Job Completed At: completed_at

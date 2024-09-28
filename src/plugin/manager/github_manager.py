@@ -1,15 +1,12 @@
 import logging
 import os
-
 from spaceone.core.manager import BaseManager
-
 from spaceone.inventory.plugin.collector.lib import (
     make_cloud_service_type,
     make_cloud_service_with_metadata,
     make_error_response,
     make_response,
 )
-
 from plugin.connector.github_connector import GithubConnector
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,13 +16,10 @@ _METADATA_DIR = os.path.join(_CURRENT_DIR, "../metadata/")
 class GithubManager(BaseManager):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.provider = "github"
-        self.cloud_service_group = "Repository" #수정해야함
+        self.cloud_service_group = "Repository"
         self.cloud_service_type = "GitHub Repository"
-        self.metadata_path = os.path.join(
-            _METADATA_DIR, "github/github.yaml" # 수정해야함
-        )
+        self.metadata_path = os.path.join(_METADATA_DIR, "github/github.yaml")
 
     def collect_resources(self, options, secret_data, schema):
         try:
@@ -38,7 +32,7 @@ class GithubManager(BaseManager):
                 cloud_service_group=self.cloud_service_group,
                 cloud_service_type=self.cloud_service_type,
             )
-    
+
     def collect_cloud_service_type(self, options, secret_data, schema):
         cloud_service_type = make_cloud_service_type(
             name=self.cloud_service_type,
