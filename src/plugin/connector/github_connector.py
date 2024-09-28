@@ -85,6 +85,7 @@ class GithubConnector(BaseConnector):
             job_list = []
             for job in jobs:
                 job_info = {
+                    'action_id': run.id,  # 해당하는 action ID 추가
                     'name': job['name'],
                     'status': job['status'],
                     'conclusion': job['conclusion'],

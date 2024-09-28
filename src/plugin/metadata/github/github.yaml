@@ -33,6 +33,7 @@ table:
     - Action Created At: data.actions.created_at
     - Action Updated At: data.actions.updated_at
     - Action URL: data.actions.url
+    - Action ID: data.actions.jobs.action_id
     - Job Name: data.actions.jobs.name
     - Job Status: data.actions.jobs.status
     - Job Conclusion: data.actions.jobs.conclusion
@@ -61,14 +62,15 @@ tabs.1:
 tabs.2:
   name: Recent Workflow
   type: item
+  root_path: data.workflows
   fields:
-    - workflow name: data.workflows.name
-    - workflow id: data.workflows.id
-    - workflow state: data.workflows.state
-    - workflow created_at: data.workflows.created_at
-    - workflow updated_at: data.workflows.updated_at
-    - workflow file: data.workflows.file
-    - workflow content: data.workflows.content
+    - workflow name: name
+    - workflow id: id
+    - workflow state: state
+    - workflow created_at: created_at
+    - workflow updated_at: updated_at
+    - workflow file: file
+    - workflow content: content
     
 tabs.3:
   name: Actions
@@ -87,6 +89,7 @@ tabs.4:
   type: table
   root_path: data.actions.jobs
   fields:
+    - Action ID: action_id
     - Job Name: name
     - Job Status: status
     - Job Conclusion: conclusion
