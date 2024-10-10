@@ -1,0 +1,13 @@
+replicaCount: 2
+
+image:
+  repository: chanjin/plugin-github-inven-collector
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 50051
+
+ingress:
+  enabled: false

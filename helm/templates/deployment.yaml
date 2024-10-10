@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "github-inven-collector.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "github-inven-collector.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "github-inven-collector.name" . }}
+    spec:
+      containers:
+        - name: github-inven-collector
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 50051
