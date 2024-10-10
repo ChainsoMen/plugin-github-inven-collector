@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Release.Name}}
+  name: github-inven-collector
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 50051
   selector:
-    app: {{ .Release.Name }} 
+    app: github-inven-collector
