@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "github-inven-collector.fullname" . }}
+  name: {{ .Release.Name}}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "github-inven-collector.name" . }}
+      app: {{.Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ include "github-inven-collector.name" . }}
+        app: {{ .Release.Name}}
     spec:
       containers:
         - name: github-inven-collector
