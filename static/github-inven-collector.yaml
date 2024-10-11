@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/ChainsoMen/plugin-github-inven-collector'
-    targetRevision: HEAD
+    targetRevision: master
     path: helm
     helm:
       valueFiles:
