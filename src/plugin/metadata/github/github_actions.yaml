@@ -1,0 +1,48 @@
+search:
+  fields:
+    - 레포지토리 이름: data.full_name
+    - 브랜치 이름: data.branches
+    - 비공개 여부: data.private
+    - 생성 날짜: data.created_at
+table:
+  sort:
+    key: data.created_at
+    desc: true
+  fields:
+    - 레포지토리 이름: data.full_name
+    - 브랜치 이름: data.branches
+    - Action Name: data.actions.name
+    - Action Status: data.actions.status
+    - Action Conclusion: data.actions.conclusion
+    - Action Created At: data.actions.created_at
+    - Action Updated At: data.actions.updated_at
+    - Action URL: data.actions.url
+    - Action ID: data.actions.jobs.action_id
+    - Job Name: data.actions.jobs.name
+    - Job Status: data.actions.jobs.status
+    - Job Conclusion: data.actions.jobs.conclusion
+    - Job Started At: data.actions.jobs.started_at
+    - Job Completed At: data.actions.jobs.completed_at
+
+tabs.0:
+  name: Actions
+  type: table
+  root_path: data.actions
+  fields:
+    - Action Name: name
+    - Action Status: status
+    - Action Conclusion: conclusion
+    - Action Created At: created_at
+    - Action Updated At: updated_at
+    - Action URL: url
+tabs.1:
+  name: Jobs
+  type: table
+  root_path: data.actions.jobs
+  fields:
+    - Action ID: action_id
+    - Job Name: name
+    - Job Status: status
+    - Job Conclusion: conclusion
+    - Job Started At: started_at
+    - Job Completed At: completed_at

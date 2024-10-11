@@ -27,17 +27,6 @@ table:
     - workflow file: data.workflows.file
     - workflow content: data.workflows.content
     - pull request: data.pull_requests
-    - Action Name: data.actions.name
-    - Action Status: data.actions.status
-    - Action Conclusion: data.actions.conclusion
-    - Action Created At: data.actions.created_at
-    - Action Updated At: data.actions.updated_at
-    - Action URL: data.actions.url
-    - Job Name: data.actions.jobs.name
-    - Job Status: data.actions.jobs.status
-    - Job Conclusion: data.actions.jobs.conclusion
-    - Job Started At: data.actions.jobs.started_at
-    - Job Completed At: data.actions.jobs.completed_at
 
 tabs.0:
   name: Details
@@ -61,34 +50,12 @@ tabs.1:
 tabs.2:
   name: Recent Workflow
   type: item
+  root_path: data.workflows
   fields:
-    - workflow name: data.workflows.name
-    - workflow id: data.workflows.id
-    - workflow state: data.workflows.state
-    - workflow created_at: data.workflows.created_at
-    - workflow updated_at: data.workflows.updated_at
-    - workflow file: data.workflows.file
-    - workflow content: data.workflows.content
-    
-tabs.3:
-  name: Actions
-  type: table
-  root_path: data.actions
-  fields:
-    - Action Name: name
-    - Action Status: status
-    - Action Conclusion: conclusion
-    - Action Created At: created_at
-    - Action Updated At: updated_at
-    - Action URL: url
-
-tabs.4:
-  name: Jobs
-  type: table
-  root_path: data.actions.jobs
-  fields:
-    - Job Name: name
-    - Job Status: status
-    - Job Conclusion: conclusion
-    - Job Started At: started_at
-    - Job Completed At: completed_at
+    - workflow name: name
+    - workflow id: id
+    - workflow state: state
+    - workflow created_at: created_at
+    - workflow updated_at: updated_at
+    - workflow file: file
+    - workflow content: content

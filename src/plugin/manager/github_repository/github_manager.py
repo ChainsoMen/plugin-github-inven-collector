@@ -11,7 +11,7 @@ from plugin.connector.github_connector import GithubConnector
 
 _LOGGER = logging.getLogger(__name__)
 _CURRENT_DIR = os.path.dirname(__file__)
-_METADATA_DIR = os.path.join(_CURRENT_DIR, "../metadata/")
+_METADATA_DIR = os.path.join(_CURRENT_DIR, "../../metadata/")
 
 class GithubManager(BaseManager):
     def __init__(self, *args, **kwargs):

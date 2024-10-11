@@ -15,6 +15,9 @@ class GithubConnector(BaseConnector):
             repos = self.client.get_user().get_repos()
             repo_list = []
             for repo in repos:
+                workflows = self.get_workflows(repo)
+                actions = self.get_actions(workflows)
+                
                 repo_info = {
                     'name': repo.name,
                     'full_name': repo.full_name,
@@ -26,8 +29,8 @@ class GithubConnector(BaseConnector):
                     'pushed_at': repo.pushed_at.isoformat(),
                     'pull_requests': repo.get_pulls().totalCount,
                     'branches': [branch.name for branch in repo.get_branches()],
-                    'workflows': self.get_workflows(repo),
-                    'actions': self.get_actions(repo)
+                    'workflows': workflows,
+                    'actions': actions
                 }
                 repo_list.append(repo_info)
             return repo_list
@@ -37,8 +40,8 @@ class GithubConnector(BaseConnector):
 
     def get_workflows(self, repo):
         try:
-            workflows = repo.get_workflows()
             workflow_list = []
+            workflows = repo.get_workflows()
             for wf in workflows:
                 workflow_list.append({
                     'name': wf.name,
@@ -54,12 +57,13 @@ class GithubConnector(BaseConnector):
             _LOGGER.error(f"Error fetching workflows: {e}")
             return []
 
-    def get_actions(self, repo):
+    def get_actions(self, workflows: List[Dict]) -> List[Dict]:
         try:
             actions = []
-            workflows = repo.get_workflows()
+            # workflows = repo.get_workflows()
             for workflow in workflows:
-                runs = workflow.get_runs()
+                # runs = workflow.get_runs()
+                runs = self.client.get_workflow_runs(workflow['id'])
                 for run in runs:
                     action_info = {
                         'name': run.name,
@@ -76,15 +80,17 @@ class GithubConnector(BaseConnector):
             _LOGGER.error(f"Error fetching actions: {e}")
             return []
 
-    def get_jobs(self, run):
+    def get_jobs(self, run) -> List[Dict]:
         try:
             # GitHub API 호출을 통해 Job 정보를 가져옵니다.
+            job_list = []
             jobs_url = run.jobs_url
             response = self.client._Github__requester.requestJsonAndCheck("GET", jobs_url)
             jobs = response[1].get('jobs', [])
-            job_list = []
+            
             for job in jobs:
                 job_info = {
+                    'action_id': str(run.id),  # 해당하는 action ID 추가
                     'name': job['name'],
                     'status': job['status'],
                     'conclusion': job['conclusion'],
@@ -96,4 +102,5 @@ class GithubConnector(BaseConnector):
         except Exception as e:
             _LOGGER.error(f"Error fetching jobs: {e}")
             return []
+
 

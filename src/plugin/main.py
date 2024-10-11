@@ -1,7 +1,8 @@
 from spaceone.inventory.plugin.collector.lib.server import CollectorPluginServer
 
 from typing import Generator
-from plugin.manager.github_manager import GithubManager
+from plugin.manager.github_repository.github_manager import GithubManager
+from plugin.manager.github_actions.github_actions_manager import GithubActionsManager
 
 app = CollectorPluginServer()
 
@@ -43,7 +44,7 @@ def collector_verify(params: dict) -> None:
 
 
 @app.route('Collector.collect')
-def collector_collect(params: dict) -> dict:
+def collector_collect(params: dict) -> Generator[dict, None, None]:
     """ Collect external data
 
     Args:
@@ -114,7 +115,15 @@ def collector_collect(params: dict) -> dict:
     schema = params.get("schema")
 
     github_mgr = GithubManager()
-    return github_mgr.collect_resources(options, secret_data, schema)
+    github_actions_mgr = GithubActionsManager()
+    
+    # GithubManager의 리소스 수집 (리포지토리 관련 데이터)
+    for resource in github_mgr.collect_resources(options, secret_data, schema):
+        yield resource
+
+    # GithubActionsManager의 리소스 수집 (Actions 관련 데이터)
+    for resource in github_actions_mgr.collect_resources(options, secret_data, schema):
+        yield resource
 
 
 @app.route('Job.get_tasks')
