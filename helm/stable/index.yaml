@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  github-inven-collector:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-10-12T04:23:44.339803232Z"
+    description: A simple Helm chart for deploying the GitHub Inventory Collector
+    digest: 8885eccf01acdabc09bb818d909803db236dffe9550c36763182e0e9b1e83fe9
+    name: github-inven-collector
+    urls:
+    - https://chainsomen.github.io/plugin-github-inven-collector/stable/github-inven-collector-1.0.11.tgz
+    version: 1.0.11
+generated: "2024-10-12T04:23:44.33933108Z"
