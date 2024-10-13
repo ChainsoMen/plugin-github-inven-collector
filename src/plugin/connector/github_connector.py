@@ -15,9 +15,6 @@ class GithubConnector(BaseConnector):
             repos = self.client.get_user().get_repos()
             repo_list = []
             for repo in repos:
-                workflows = self.get_workflows(repo)
-                actions = self.get_actions(workflows)
-                
                 repo_info = {
                     'name': repo.name,
                     'full_name': repo.full_name,
@@ -29,8 +26,8 @@ class GithubConnector(BaseConnector):
                     'pushed_at': repo.pushed_at.isoformat(),
                     'pull_requests': repo.get_pulls().totalCount,
                     'branches': [branch.name for branch in repo.get_branches()],
-                    'workflows': workflows,
-                    'actions': actions
+                    'workflows': self.get_workflows(repo),
+                    'actions': self.get_actions(repo)
                 }
                 repo_list.append(repo_info)
             return repo_list
@@ -57,13 +54,12 @@ class GithubConnector(BaseConnector):
             _LOGGER.error(f"Error fetching workflows: {e}")
             return []
 
-    def get_actions(self, workflows: List[Dict]) -> List[Dict]:
+    def get_actions(self, repo: List[Dict]) -> List[Dict]:
         try:
             actions = []
-            # workflows = repo.get_workflows()
+            workflows = repo.get_workflows()
             for workflow in workflows:
-                # runs = workflow.get_runs()
-                runs = self.client.get_workflow_runs(workflow['id'])
+                runs = workflow.get_runs()
                 for run in runs:
                     action_info = {
                         'name': run.name,
