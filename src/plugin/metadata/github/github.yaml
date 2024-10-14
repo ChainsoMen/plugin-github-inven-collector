@@ -25,7 +25,6 @@ table:
     - workflow created_at: data.workflows.created_at
     - workflow updated_at: data.workflows.updated_at
     - workflow file: data.workflows.file
-    - workflow content: data.workflows.content
     - pull request: data.pull_requests
 
 tabs.0:
@@ -58,4 +57,3 @@ tabs.2:
     - workflow created_at: created_at
     - workflow updated_at: updated_at
     - workflow file: file
-    - workflow content: content

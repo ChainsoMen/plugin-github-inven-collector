@@ -51,7 +51,7 @@ class GithubManager(BaseManager):
 
     def collect_cloud_service(self, options, secret_data, schema):
         github_connector = GithubConnector(github_access_token=secret_data['github_access_token'])
-        repositories = github_connector.list_repositories()
+        repositories = github_connector.list_repositories(False)
 
         for repo in repositories:
             cloud_service = make_cloud_service_with_metadata(

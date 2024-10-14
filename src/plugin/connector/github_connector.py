@@ -2,6 +2,8 @@ import logging
 from typing import Dict, List
 from github import Github
 from spaceone.core.connector import BaseConnector
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from functools import lru_cache
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -9,32 +11,60 @@ class GithubConnector(BaseConnector):
     def __init__(self, github_access_token: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client = Github(github_access_token)
+    
+    # 캐싱
+    @lru_cache(maxsize=128)
+    def list_repositories(self, actions: bool) -> List[Dict]:
+        return self._list_repositories(actions)
 
-    def list_repositories(self) -> List[Dict]:
+    def _list_repositories(self, actions: bool) -> List[Dict]:
         try:
             repos = self.client.get_user().get_repos()
             repo_list = []
-            for repo in repos:
-                repo_info = {
-                    'name': repo.name,
-                    'full_name': repo.full_name,
-                    'private': repo.private,
-                    'description': repo.description,
-                    'html_url': repo.html_url,
-                    'created_at': repo.created_at.isoformat(),
-                    'updated_at': repo.updated_at.isoformat(),
-                    'pushed_at': repo.pushed_at.isoformat(),
-                    'pull_requests': repo.get_pulls().totalCount,
-                    'branches': [branch.name for branch in repo.get_branches()],
-                    'workflows': self.get_workflows(repo),
-                    'actions': self.get_actions(repo)
-                }
-                repo_list.append(repo_info)
+
+            # ThreadPoolExecutor를 사용하여 병렬 처리
+            # 각 리포지토리에 대해 스레드 풀에서 비동기적으로 처리
+            with ThreadPoolExecutor(max_workers=10) as executor:
+                future_to_repo = {executor.submit(self.get_repo_info, repo, actions): repo for repo in repos}
+                # future: 스레드 풀에서 작업의 완료 상태나 결과를 확인할 수 있는 객체
+                for future in as_completed(future_to_repo): # 작업이 완료되는 순서대로 future 객체를 반환
+                    try:
+                        repo_info = future.result()
+                        if repo_info:
+                            repo_list.append(repo_info)
+                    except Exception as e:
+                        _LOGGER.error(f"Error fetching repository info: {e}")
+
             return repo_list
         except Exception as e:
             _LOGGER.error(f"Error fetching repositories from GitHub: {e}")
             return []
-
+    
+    
+    def get_repo_info(self, repo, fetch_actions: bool) -> Dict:
+        try:
+            actions_data = []
+            if fetch_actions:
+                actions_data = self.get_actions(repo)
+            
+            repo_info = {
+                'name': repo.name,
+                'full_name': repo.full_name,
+                'private': repo.private,
+                'description': repo.description,
+                'html_url': repo.html_url,
+                'created_at': repo.created_at.isoformat(),
+                'updated_at': repo.updated_at.isoformat(),
+                'pushed_at': repo.pushed_at.isoformat(),
+                'branches': [branch.name for branch in repo.get_branches()],
+                'workflows': self.get_workflows(repo),
+                'actions': actions_data
+            }
+            return repo_info
+        except Exception as e:
+            _LOGGER.error(f"Error fetching repository info for {repo.name}: {e}")
+            return {}
+        
     def get_workflows(self, repo):
         try:
             workflow_list = []
@@ -42,12 +72,11 @@ class GithubConnector(BaseConnector):
             for wf in workflows:
                 workflow_list.append({
                     'name': wf.name,
-                    'id': wf.id,
+                    'id': str(wf.id),
                     'state': wf.state,
                     'created_at': wf.created_at.isoformat(),
                     'updated_at': wf.updated_at.isoformat(),
                     'file': wf.path,
-                    'content': repo.get_contents(wf.path).decoded_content.decode('utf-8')
                 })
             return workflow_list
         except Exception as e:
@@ -98,5 +127,3 @@ class GithubConnector(BaseConnector):
         except Exception as e:
             _LOGGER.error(f"Error fetching jobs: {e}")
             return []
-
-
