@@ -46,6 +46,9 @@ class GithubConnector(BaseConnector):
             actions_data = []
             if fetch_actions:
                 actions_data = self.get_actions(repo)
+                branches = []
+            else:
+                branches = [branch.name for branch in repo.get_branches()]
             
             repo_info = {
                 'name': repo.name,
@@ -56,7 +59,7 @@ class GithubConnector(BaseConnector):
                 'created_at': repo.created_at.isoformat(),
                 'updated_at': repo.updated_at.isoformat(),
                 'pushed_at': repo.pushed_at.isoformat(),
-                'branches': [branch.name for branch in repo.get_branches()],
+                'branches': branches,
                 'workflows': self.get_workflows(repo),
                 'actions': actions_data
             }
