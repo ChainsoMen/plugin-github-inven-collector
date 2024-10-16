@@ -10,7 +10,6 @@ table:
     desc: true
   fields:
     - 레포지토리 이름: data.full_name
-    - 브랜치 이름: data.branches
     - Action Name: data.actions.name
     - Action Status: data.actions.status
     - Action Conclusion: data.actions.conclusion
