@@ -2,7 +2,6 @@ import logging
 from typing import Dict, List
 from github import Github
 from spaceone.core.connector import BaseConnector
-# from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import lru_cache
 
 _LOGGER = logging.getLogger(__name__)
@@ -11,30 +10,6 @@ class GithubConnector(BaseConnector):
     def __init__(self, github_access_token: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.client = Github(github_access_token)
-        
-    # 영진 멘토님 리뷰로 멀티 스레딩 삭제
-    # def _list_repositories(self, actions: bool) -> List[Dict]:
-    #     try:
-    #         repos = self.client.get_user().get_repos()
-    #         repo_list = []
-
-    #         # ThreadPoolExecutor를 사용하여 병렬 처리
-    #         # 각 리포지토리에 대해 스레드 풀에서 비동기적으로 처리
-    #         with ThreadPoolExecutor(max_workers=10) as executor:
-    #             future_to_repo = {executor.submit(self.get_repo_info, repo, actions): repo for repo in repos}
-    #             # future: 스레드 풀에서 작업의 완료 상태나 결과를 확인할 수 있는 객체
-    #             for future in as_completed(future_to_repo): # 작업이 완료되는 순서대로 future 객체를 반환
-    #                 try:
-    #                     repo_info = future.result()
-    #                     if repo_info:
-    #                         repo_list.append(repo_info)
-    #                 except Exception as e:
-    #                     _LOGGER.error(f"Error fetching repository info: {e}")
-
-    #         return repo_list
-    #     except Exception as e:
-    #         _LOGGER.error(f"Error fetching repositories from GitHub: {e}")
-    #         return []
     
     # 캐싱
     @lru_cache(maxsize=128)
