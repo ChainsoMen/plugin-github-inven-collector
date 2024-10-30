@@ -10,34 +10,33 @@ table:
     desc: true
   fields:
     - 레포지토리 이름: data.full_name
-    - Action Name: data.actions.name
-    - Action Status: data.actions.status
-    - Action Conclusion: data.actions.conclusion
-    - Action Created At: data.actions.created_at
-    - Action Updated At: data.actions.updated_at
-    - Action URL: data.actions.url
-    - Action ID: data.actions.jobs.action_id
-    - Job Name: data.actions.jobs.name
-    - Job Status: data.actions.jobs.status
-    - Job Conclusion: data.actions.jobs.conclusion
-    - Job Started At: data.actions.jobs.started_at
-    - Job Completed At: data.actions.jobs.completed_at
+    - Action Name: data.name
+    - Action Status: data.status
+    - Action Conclusion: data.conclusion
+    - Action Created At: data.created_at
+    - Action Updated At: data.updated_at
+    - Action URL: data.url
+    - Action ID: data.jobs.action_id
+    - Job Name: data.jobs.name
+    - Job Status: data.jobs.status
+    - Job Conclusion: data.jobs.conclusion
+    - Job Started At: data.jobs.started_at
+    - Job Completed At: data.jobs.completed_at
 
 tabs.0:
   name: Actions
-  type: table
-  root_path: data.actions
+  type: item
   fields:
-    - Action Name: name
-    - Action Status: status
-    - Action Conclusion: conclusion
-    - Action Created At: created_at
-    - Action Updated At: updated_at
-    - Action URL: url
+    - Action Name: data.name
+    - Action Status: data.status
+    - Action Conclusion: data.conclusion
+    - Action Created At: data.created_at
+    - Action Updated At: data.updated_at
+    - Action URL: data.url
 tabs.1:
   name: Jobs
   type: table
-  root_path: data.actions.jobs
+  root_path: data.jobs
   fields:
     - Action ID: action_id
     - Job Name: name

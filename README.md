@@ -5,7 +5,7 @@
   <img width="245" src="https://velog.velcdn.com/images/singularity/post/db1a1062-b8bb-4f55-a289-dd41e1c5bd3a/image.png">
   <p> 
     <br>
-    <img alt="Version"  src="https://img.shields.io/badge/version-0.0.14-blue.svg?cacheSeconds=2592000"  />    
+    <img alt="Version"  src="https://img.shields.io/badge/version-1.1.3-blue.svg?cacheSeconds=2592000"  />    
     <a href="https://www.apache.org/licenses/LICENSE-2.0"  target="_blank"><img alt="License: Apache 2.0"  src="https://img.shields.io/badge/License-Apache 2.0-yellow.svg" /></a> 
   </p> 
 </div>
@@ -18,7 +18,7 @@ is a convenient tool to get github repository data from Github.
 
 
 Find us also at [Dockerhub](https://hub.docker.com/r/chanjin/plugin-github-inven-collector)
-> Latest version : 0.0.14
+> Latest version : 1.1.3
 
 Please contact us if you need any further information. (<kr.public.wonjun@gmail.com>)
 
