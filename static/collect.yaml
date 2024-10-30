@@ -1,4 +1,4 @@
 ---
 options: { }
 secret_data:
-  github_access_token: ${GITHUB_TOKEN}
+  github_access_token: ${GITHUB_ACCESS_TOKEN}
